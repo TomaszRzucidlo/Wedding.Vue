@@ -3,23 +3,32 @@ import axios from 'axios';
 import JwtService from './jwt.service';
 import {API_URL} from './config';
 
+
 const ApiService = {
   init() {
+    console.log("init")
     Vue.use(axios);
   },
   setHeader() {
-    Vue.axios.defaults.headers.common[
-      "Authorization"
-    ] = `Token ${JwtService.getToken()}`;
-  },
-  query(resource, params) {
-    return Vue.axios.get(resource, params).catch(error => {
-      throw new Error(`[RWV] ApiService ${error}`);
+    axios.interceptors.request.use((config) => {
+      config.headers['Authorization'] = 'Bearer ' + JwtService.getToken();
+      return config;
+    }, (error) => {
+      console.log(error);
     });
+
   },
-  post(code) {
-    console.log(`${API_URL}account/login`);
-    return axios.post(`${API_URL}account/login`, code);
+  get(resource, params=""){
+    return axios.get(`${API_URL}${resource}/${params}`)
+  },
+  post(resource, params) {
+    return axios.post(`${API_URL}${resource}`, params);
   },
 }
 export default ApiService;
+
+export const GuestService ={
+  get(){
+    return ApiService.get("guest/get");
+  }
+}

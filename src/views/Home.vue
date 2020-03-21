@@ -45,7 +45,7 @@ export default {
       image: 1,
       imageone: "",
       imagetwo: "",
-      code:""
+      code:"bb1ae82f"
     };
   },
   methods: {

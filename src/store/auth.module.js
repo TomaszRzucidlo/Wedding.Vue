@@ -25,8 +25,9 @@ const getters = {
 const actions = {
     [LOGIN](context, code) {
         return new Promise(resolve => {
-            ApiService.post(code)
+            ApiService.post("account/login",{'code':code.code})
                 .then(({ data }) => {
+                  console.log(data)
                   if(data.is_success){
                     context.commit(SET_AUTH, data.token);
                     resolve(data);

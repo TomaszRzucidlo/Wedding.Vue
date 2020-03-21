@@ -22,7 +22,7 @@ export default {
     attend(code){
         this.$store
             .dispatch(LOGIN, { code })
-            .then(() => this.$router.push({ name: "About" }));
+            .then(() => this.$router.push({ name: "Guest" }));
     }
   }
 }
